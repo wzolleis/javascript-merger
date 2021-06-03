@@ -23,7 +23,7 @@ class ModulesController {
         res.status(201).send({id: moduleId});
     }
 
-    async put(req: express.Request, res: express.Response) {
+    async putModule(req: express.Request, res: express.Response) {
         log(await modulesService.putById(req.body.id, req.body));
         res.status(204).send();
     }

@@ -1,5 +1,9 @@
 import {CommonRoutesConfig} from '../common/common.routes.config';
 import express from 'express';
+import ModuleController from './controllers/modules.controller'
+import ModulesMiddleware from './middleware/ModulesMiddleware';
+
+const modulePath = '/api/modules'
 
 export class ModulesRoutes extends CommonRoutesConfig {
     constructor(app: express.Application) {
@@ -8,30 +12,25 @@ export class ModulesRoutes extends CommonRoutesConfig {
 
     configureRoutes() {
 
-        this.app.route(`/modules`)
-            .get((req: express.Request, res: express.Response) => {
-                res.status(200).send(`List of modules`);
-            })
-            .post((req: express.Request, res: express.Response) => {
-                res.status(200).send(`Post to modules`);
-            });
+        this.app.route(`${modulePath}`)
+            .get(ModuleController.listModules)
+            .post(ModulesMiddleware.validateRequiredModuleBodyFields, ModuleController.createModule)
+        this.app.param(`moduleId`, ModulesMiddleware.extractModuleId);
 
-        this.app.route(`/modules/:moduleId`)
+        this.app.route(`${modulePath}/:moduleId`)
             .all((req: express.Request, res: express.Response, next: express.NextFunction) => {
                 // this middleware function runs before any request to /modules/:userId
                 // but it doesn't accomplish anything just yet---
                 // it simply passes control to the next applicable function below using next()
                 next();
             })
-            .get((req: express.Request, res: express.Response) => {
-                res.status(200).send(`GET requested for id ${req.params.userId}`);
-            })
-            .put((req: express.Request, res: express.Response) => {
-                res.status(200).send(`PUT requested for id ${req.params.userId}`);
-            })
-            .delete((req: express.Request, res: express.Response) => {
-                res.status(200).send(`DELETE requested for id ${req.params.userId}`);
-            });
+            .get(ModuleController.getModuleById)
+            .delete(ModuleController.removeModule)
+
+        this.app.put(`${modulePath}/:moduleId`, [
+            ModulesMiddleware.validateRequiredModuleBodyFields,
+            ModuleController.putModule])
+
 
         return this.app;
     }

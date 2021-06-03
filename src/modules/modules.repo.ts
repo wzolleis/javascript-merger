@@ -18,10 +18,7 @@ class ModulesRepo {
             id: shortid.generate(),
             ...createModule
         }
-        this.modules = [
-            ...this.modules,
-            module,
-        ]
+        this.modules.push(module)
         return module.id;
     }
 
@@ -30,16 +27,28 @@ class ModulesRepo {
     }
 
     async getModuleById(moduleId: ModuleId): Promise<Optional<Module>> {
-        return this.modules.find((module: { id: ModuleId }) => module.id === moduleId);
+        const findById = (module: Module) => module.id === moduleId
+        return this.modules.find(findById);
     }
 
-    async putModuleById(moduleid: ModuleId, module: PutModuleDto): Promise<ModuleId> {
-        const objIndex = this.modules.findIndex(
-            (obj: { id: string }) => obj.id === moduleid
-        );
+    async putModuleById(moduleId: ModuleId, module: PutModuleDto): Promise<ModuleId> {
+        const findById = (module: Module) => module.id === moduleId
+        const objIndex = this.modules.findIndex(findById)
+
         this.modules.splice(objIndex, 1, module);
         log(`${module.id} updated via put`);
         return module.id
+    }
+
+    async delete(moduleId: ModuleId): Promise<Optional<Module>> {
+        const findById = (module: Module) => module.id === moduleId
+        const removedItem = this.modules.find(findById)
+        if (removedItem) {
+            const objIndex = this.modules.findIndex(findById)
+            this.modules = this.modules.splice(objIndex, 1)
+        }
+
+        return removedItem
     }
 }
 
