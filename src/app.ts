@@ -7,6 +7,7 @@ import cors from 'cors';
 import {CommonRoutesConfig} from './common/common.routes.config';
 import debug from 'debug';
 import {ModulesRoutes} from './modules/modules.routes.config';
+import {MergeModulesRoutes} from './merge_modules/merge.modules.routes.config'
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
@@ -40,7 +41,7 @@ app.use(expressWinston.logger(loggerOptions));
 
 // here we are adding the Routes to our array,
 // after sending the Express.js application object to have the routes added to our app!
-routes.push(new ModulesRoutes(app));
+routes.push(new ModulesRoutes(app), new MergeModulesRoutes(app));
 
 // this is a simple route to make sure everything is working properly
 const runningMessage = `Server running at http://localhost:${port}`;

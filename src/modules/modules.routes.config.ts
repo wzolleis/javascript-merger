@@ -15,9 +15,9 @@ export class ModulesRoutes extends CommonRoutesConfig {
         this.app.route(`${modulePath}`)
             .get(ModuleController.listModules)
             .post(ModulesMiddleware.validateRequiredModuleBodyFields, ModuleController.createModule)
-        this.app.param(`moduleId`, ModulesMiddleware.extractModuleId);
+        this.app.param(`id`, ModulesMiddleware.extractId);
 
-        this.app.route(`${modulePath}/:moduleId`)
+        this.app.route(`${modulePath}/:id`)
             .all((req: express.Request, res: express.Response, next: express.NextFunction) => {
                 // this middleware function runs before any request to /modules/:userId
                 // but it doesn't accomplish anything just yet---
@@ -27,7 +27,7 @@ export class ModulesRoutes extends CommonRoutesConfig {
             .get(ModuleController.getModuleById)
             .delete(ModuleController.removeModule)
 
-        this.app.put(`${modulePath}/:moduleId`, [
+        this.app.put(`${modulePath}/:id`, [
             ModulesMiddleware.validateRequiredModuleBodyFields,
             ModuleController.putModule])
 

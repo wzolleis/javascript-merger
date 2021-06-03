@@ -18,12 +18,12 @@ class ModulesMiddleware {
         }
     }
 
-    async extractModuleId(
+    async extractId(
         req: express.Request,
         res: express.Response,
         next: express.NextFunction
     ) {
-        req.body.id = req.params.moduleId;
+        req.body.id = req.params.id;
         next();
     }
 }

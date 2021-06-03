@@ -1,5 +1,6 @@
-export interface Module {
-    id: string
+import {Identifyable} from '../common/common.types';
+
+export interface Module extends Identifyable {
     name: string,
     path: string,
     type: string,
@@ -7,5 +8,3 @@ export interface Module {
 }
 
 export type ModuleId = string
-
-export type Optional<T> = T | undefined

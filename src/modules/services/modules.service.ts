@@ -1,27 +1,34 @@
-import {Module, ModuleId, Optional} from '../module.types';
-import ModulesRepo from '../modules.repo'
-import {CreateModuleDto} from '../create.module.dto';
-import {PutModuleDto} from '../put.module.dto';
+import {Module, ModuleId} from '../module.types';
+import ModulesRepo from '../infrastructure/modules.repo'
+import {CreateModuleDto} from '../dto/create.module.dto';
+import {PutModuleDto} from '../dto/put.module.dto';
+import {Optional} from '../../common/common.types';
 
 class ModulesService {
     async create(resource: CreateModuleDto): Promise<ModuleId> {
-        return ModulesRepo.addModule(resource)
+        const module: Module = {
+            ...resource
+        }
+        return ModulesRepo.addItem(module)
     }
 
-    async deleteById(id: ModuleId): Promise<Optional<Module>> {
+    async remove(id: ModuleId): Promise<Optional<Module>> {
         return ModulesRepo.delete(id)
     }
 
     async list(): Promise<Array<Module>> {
-        return ModulesRepo.getModules()
+        return ModulesRepo.listItems()
     }
 
-    async putById(id: ModuleId, resource: PutModuleDto): Promise<string> {
-        return ModulesRepo.putModuleById(id, resource)
+    async update(id: ModuleId, resource: PutModuleDto): Promise<Optional<string>> {
+        const data: Module = {
+            ...resource
+        }
+        return ModulesRepo.putItemById(data)
     }
 
-    async readById(id: ModuleId): Promise<Optional<Module>> {
-        return ModulesRepo.getModuleById(id)
+    async read(id: ModuleId): Promise<Optional<Module>> {
+        return ModulesRepo.getItemById(id)
     }
 }
 

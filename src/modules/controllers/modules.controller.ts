@@ -14,7 +14,7 @@ class ModulesController {
     }
 
     async getModuleById(req: express.Request, res: express.Response) {
-        const module = await modulesService.readById(req.body.id);
+        const module = await modulesService.read(req.body.id);
         res.status(200).send(module);
     }
 
@@ -24,12 +24,12 @@ class ModulesController {
     }
 
     async putModule(req: express.Request, res: express.Response) {
-        log(await modulesService.putById(req.body.id, req.body));
+        log(await modulesService.update(req.body.id, req.body));
         res.status(204).send();
     }
 
     async removeModule(req: express.Request, res: express.Response) {
-        log(await modulesService.deleteById(req.body.id));
+        log(await modulesService.remove(req.body.id));
         res.status(204).send();
     }
 }
