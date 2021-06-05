@@ -10,7 +10,7 @@ class MergeModuleService {
     async create(resource: CreateMergeModulesDto): Promise<string> {
         const mergeResult: MergeResult = {
             source: resource.source,
-            result: []
+            result: resource.destination // todo - hier muss das Ergebnis des Merge rein (ids im Module-Repo)
         }
         return mergeResultRepo.insert(mergeResult)
     }
