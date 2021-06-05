@@ -7,7 +7,7 @@ const modulePath = '/api/modules'
 
 export class ModulesRoutes extends CommonRoutesConfig {
     constructor(app: express.Application) {
-        super(app, 'PackageJsonRoutes');
+        super(app, 'Module');
     }
 
     configureRoutes() {
@@ -15,8 +15,8 @@ export class ModulesRoutes extends CommonRoutesConfig {
         this.app.route(`${modulePath}`)
             .get(ModuleController.listModules)
             .post(ModulesMiddleware.validateRequiredModuleBodyFields, ModuleController.createModule)
-        this.app.param(`id`, ModulesMiddleware.extractId);
 
+        this.app.param(`id`, ModulesMiddleware.extractId);
         this.app.route(`${modulePath}/:id`)
             .all((req: express.Request, res: express.Response, next: express.NextFunction) => {
                 // this middleware function runs before any request to /modules/:userId

@@ -13,8 +13,8 @@ class MergeModulesController {
     }
 
     async list(req: express.Request, res: express.Response) {
-        const modules = await mergeService.list();
-        res.status(200).send(modules);
+        const result = await mergeService.list();
+        res.status(200).send(result);
     }
 
     async read(req: express.Request, res: express.Response) {

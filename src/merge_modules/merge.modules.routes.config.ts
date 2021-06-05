@@ -7,7 +7,7 @@ const apiPath = '/api/modules/merge'
 
 export class MergeModulesRoutes extends CommonRoutesConfig {
     constructor(app: express.Application) {
-        super(app, 'PackageJsonRoutes');
+        super(app, 'mergeModule');
     }
 
     configureRoutes() {
@@ -15,8 +15,8 @@ export class MergeModulesRoutes extends CommonRoutesConfig {
         this.app.route(`${apiPath}`)
             .get(MergeModuleController.list)
             .post(MergeModuleController.create)
-        this.app.param(`id`, MergeModulesMiddleware.extractId);
 
+        this.app.param(`id`, MergeModulesMiddleware.extractId);
         this.app.route(`${apiPath}/:id`)
             .all((req: express.Request, res: express.Response, next: express.NextFunction) => {
                 // this middleware function runs before any request to /modules/:userId

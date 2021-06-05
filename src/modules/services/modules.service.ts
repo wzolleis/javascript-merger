@@ -9,7 +9,7 @@ class ModulesService {
         const module: Module = {
             ...resource
         }
-        return ModulesRepo.addItem(module)
+        return ModulesRepo.insert(module)
     }
 
     async remove(id: ModuleId): Promise<Optional<Module>> {
@@ -24,11 +24,11 @@ class ModulesService {
         const data: Module = {
             ...resource
         }
-        return ModulesRepo.putItemById(data)
+        return ModulesRepo.update(data)
     }
 
     async read(id: ModuleId): Promise<Optional<Module>> {
-        return ModulesRepo.getItemById(id)
+        return ModulesRepo.findById(id)
     }
 }
 
