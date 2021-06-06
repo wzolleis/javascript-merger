@@ -1,19 +1,17 @@
 import express from 'express';
 
 import mergeService from '../services/merge.module.service';
+import logger from '../../common/lib/winston.logger.config'
 
-// we use debug with a custom context as described in Part 1
-import debug from 'debug';
-
-const log: debug.IDebugger = debug('app:modules-controller');
 
 class MergeModulesController {
     constructor() {
-        log("merge modules controller")
+        logger.debug("created   merge_module controller")
     }
 
     async list(req: express.Request, res: express.Response) {
         const result = await mergeService.list();
+
         res.status(200).send(result);
     }
 

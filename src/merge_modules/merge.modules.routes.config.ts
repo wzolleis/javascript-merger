@@ -3,7 +3,7 @@ import express from 'express';
 import MergeModuleController from './controllers/merge.modules.controller'
 import MergeModulesMiddleware from './middleware/MergeModulesMiddleware';
 
-const apiPath = '/api/modules/merge'
+const apiPath = '/api/merge'
 
 export class MergeModulesRoutes extends CommonRoutesConfig {
     constructor(app: express.Application) {
