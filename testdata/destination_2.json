@@ -1,0 +1,11 @@
+{
+  "name": "testdaten",
+  "version": "0.0.1",
+  "description": "nur zum testen gedacht",
+  "dependencies": {
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}

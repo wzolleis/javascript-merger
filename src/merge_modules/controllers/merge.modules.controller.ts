@@ -1,6 +1,6 @@
 import express from 'express';
 
-import mergeService from '../services/merge.module.service';
+import mergeService from '../services/merge.module.repo.service';
 import logger from '../../common/lib/winston.logger.config'
 
 

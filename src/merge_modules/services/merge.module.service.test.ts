@@ -1,4 +1,4 @@
-import sut from './merge.module.service'
+import sut from './merge.module.repo.service'
 import {CreateMergeModulesDto} from '../dto/create.merge.modules.dto';
 
 describe("merge module service", () => {

@@ -40,4 +40,16 @@ const logger = createLogger({
     ]
 })
 
+export const consoleLogger = createLogger({
+    level: level(),
+    transports: [
+        new transports.Console({
+            format: format.combine(
+                myFormat,
+                format.colorize({all: true}),
+            )
+        })
+    ]
+})
+
 export default logger;

@@ -4,3 +4,7 @@ export interface Identifyable {
     id?: string
 }
 
+export interface CliOptions {
+    source: string,
+    destination: string[]
+}
