@@ -1,11 +1,7 @@
 import express from 'express';
 
 import modulesService from '../services/modules.service';
-
-// we use debug with a custom context as described in Part 1
-import debug from 'debug';
-
-const log: debug.IDebugger = debug('app:modules-controller');
+import logger from '../../common/lib/winston.logger.config';
 
 class ModulesController {
     async listModules(req: express.Request, res: express.Response) {
@@ -24,12 +20,12 @@ class ModulesController {
     }
 
     async putModule(req: express.Request, res: express.Response) {
-        log(await modulesService.update(req.body.id, req.body));
+        logger.debug(await modulesService.update(req.body.id, req.body));
         res.status(204).send();
     }
 
     async removeModule(req: express.Request, res: express.Response) {
-        log(await modulesService.remove(req.body.id));
+        logger.debug(await modulesService.remove(req.body.id));
         res.status(204).send();
     }
 }

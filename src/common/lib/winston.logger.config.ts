@@ -1,12 +1,6 @@
-import winston from 'winston'
+import winston from 'winston';
 
-const levels = {
-    error: 0,
-    warn: 1,
-    info: 2,
-    http: 3,
-    debug: 4,
-}
+const {createLogger, format, transports, addColors} = winston
 
 const level = () => {
     const env = process.env.NODE_ENV || 'development'
@@ -21,31 +15,29 @@ const colors = {
     http: 'magenta',
     debug: 'white',
 }
+addColors(colors)
 
-winston.addColors(colors)
-
-const format = winston.format.combine(
+const myFormat = winston.format.combine(
     winston.format.timestamp({format: 'YYYY-MM-DD HH:mm:ss:ms'}),
-    winston.format.colorize({all: true}),
     winston.format.printf(
         (info) => `${info.timestamp} ${info.level}: ${info.message}`,
     ),
 )
 
-const transports = [
-    new winston.transports.Console(),
-    new winston.transports.File({
-        filename: 'logs/error.log',
-        level: 'error',
-    }),
-    new winston.transports.File({filename: 'logs/all.log'}),
-]
-
-const Logger = winston.createLogger({
+const logger = createLogger({
     level: level(),
-    levels,
-    format,
-    transports,
-});
+    transports: [
+        new transports.Console({
+            format: format.combine(
+                myFormat,
+                format.colorize({all: true}),
+            )
+        }),
+        new transports.File({
+            format: myFormat,
+            filename: 'logs/all.log'
+        }),
+    ]
+})
 
-export default Logger
+export default logger;

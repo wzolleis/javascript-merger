@@ -1,11 +1,9 @@
-//import file we are testing
+import request from 'supertest'
+import {app} from '../../app'
 
-const express = require("express"); // import express
-const serverRoutes = require("./server-routes");
-const app = express(); //an instance of an express app, a 'fake' express app
-app.use("/states", serverRoutes); //routes
-
-
-describe('merge controller', () => {
-
-})
+describe("Test the root path", () => {
+    test("It should response the GET method", async () => {
+        const response = await request(app).get("/");
+        expect(response.statusCode).toBe(200);
+    });
+});
