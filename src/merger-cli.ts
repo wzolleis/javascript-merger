@@ -3,15 +3,52 @@ import clear from 'clear'
 import figlet from "figlet";
 import {consoleLogger} from './common/lib/winston.logger.config'
 import CommandLineParser from './common/lib/command.line.parser'
+import {pathExists} from "./common/lib/files";
+import {CliOptions} from "./common/common.types";
 
-clear();
+const checkArguments = (cliOptions: CliOptions): boolean => {
+    let argsValid = true;
 
-consoleLogger.info(
-    chalk.yellow(
-        figlet.textSync('Merge', { horizontalLayout: 'full' })
-    )
-);
+    if (!pathExists(cliOptions.source)) {
+        consoleLogger.error(`invalid source ${cliOptions.source}`)
+        argsValid = false
+    }
 
-const cliOptions = CommandLineParser.parseArguments(process.argv)
+    cliOptions.destination.forEach((destination) => {
+        if (!pathExists(destination)) {
+            consoleLogger.error(`invalid path ${destination}`)
+            argsValid = false
+        }
+    })
 
-console.log(`source = ${cliOptions.source}, destinations: ${cliOptions.destination.join()}`)
+    return argsValid
+
+}
+
+
+const start = () => {
+    clear();
+
+    consoleLogger.info(
+        chalk.yellow(
+            figlet.textSync('Merge', {horizontalLayout: 'full'})
+        )
+    );
+
+    const cliOptions = CommandLineParser.parseArguments(process.argv)
+    consoleLogger.info(`source = ${cliOptions.source}, destinations: ${cliOptions.destination.join()}`)
+
+    const argsValid = checkArguments(cliOptions)
+    if (!argsValid) {
+        consoleLogger.error("invalid arguements - exiting...")
+        process.exit(-1)
+    }
+
+
+    const source = (cliOptions.source);
+
+}
+
+start()
+
+

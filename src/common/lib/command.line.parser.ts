@@ -5,7 +5,7 @@ class CommandLineParser {
     parseArguments(args: string[]): CliOptions {
         const program = new Command();
         program.requiredOption('-s, --source <input>', 'source package.json')
-        program.option('-d, --destination [destinations...]', 'Destination package.json (csv)')
+        program.option('-d, --destination [destinations...]', 'Multiple Destination package.json ')
 
         program.parse(args)
 

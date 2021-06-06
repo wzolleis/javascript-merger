@@ -8,3 +8,12 @@ export interface CliOptions {
     source: string,
     destination: string[]
 }
+
+export interface MergeAttributes {
+    dependencies: {
+        [key: string]: [value: string]
+    },
+    devDependencies: {
+        [key: string]: [value: string]
+    }
+}

@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="cli help" type="NodeJSConfigurationType" application-parameters="--help" node-parameters="--require ts-node/register" path-to-js-file="src/merger-cli.ts" working-dir="$PROJECT_DIR$">
+    <method v="2" />
+  </configuration>
+</component>
