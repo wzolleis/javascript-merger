@@ -1,10 +1,10 @@
 import {CommonRoutesConfig} from '../common/common.routes.config';
 import express from 'express';
-import ModuleController from './controllers/modules.controller'
+import RootController from './controllers/root.controller'
 
-const modulePath = '/api/modules'
+const modulePath = '/'
 
-export class ModulesRoutes extends CommonRoutesConfig {
+export class RootRoutes extends CommonRoutesConfig {
     constructor(app: express.Application) {
         super(app, 'Root');
     }
@@ -12,10 +12,7 @@ export class ModulesRoutes extends CommonRoutesConfig {
     configureRoutes() {
 
         this.app.route(`${modulePath}`)
-            .get(ModuleController.listModules)
-
-
+            .get(RootController.welcomeMessage)
         return this.app;
     }
-
 }
