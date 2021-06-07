@@ -1,7 +1,7 @@
 import {PackageJson} from '../../common/common.types';
 
 class MergeService {
-    merge(sourceJson: PackageJson, destinationsJson: PackageJson): object {
+    merge(sourceJson: PackageJson, destinationsJson: PackageJson): Partial<PackageJson> {
         const dependencies = {
             ...destinationsJson.dependencies,
             ...sourceJson.dependencies

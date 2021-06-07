@@ -10,13 +10,6 @@ export interface CliOptions {
 }
 
 export interface PackageJson {
-    name: string
-    version: string
-    description: string
-    dependencies: {
-        [key: string]: [value: string]
-    },
-    devDependencies: {
-        [key: string]: [value: string]
-    }
+    dependencies: Record<string, string>,
+    devDependencies: Record<string, string>
 }
