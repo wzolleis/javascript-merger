@@ -13,7 +13,6 @@ class MergeService {
 
         return {
             ...destinationsJson,
-            ...sourceJson,
             dependencies,
             devDependencies
         }
