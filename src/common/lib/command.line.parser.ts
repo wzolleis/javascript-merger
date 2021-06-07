@@ -4,12 +4,13 @@ import {Command} from "commander";
 class CommandLineParser {
     parseArguments(args: string[]): CliOptions {
         const program = new Command();
-        program.requiredOption('-s, --source <input>', 'source package.json')
+        program.requiredOption('-s, --source <input>', 'source package.json relative to cwd')
         program.option('-w, --cwd <input>',
             'working directory, the other paths are relative to this directory',
             process.cwd()
         )
-        program.option('-d, --destination [destinations...]', 'Multiple Destination package.json ')
+        program.option('-d, --destination [destinations...]',
+            'Multiple Destination package.json, relative to cwd ')
 
         program.parse(args)
 
