@@ -1,6 +1,5 @@
 import {CommonRoutesConfig} from './common/common.routes.config';
 import http from 'http';
-import express from 'express';
 import {app, routes} from './app';
 import Logger from './common/lib/winston.logger.config';
 import {AddressInfo} from "net";
@@ -22,10 +21,16 @@ export const listener = server.listen(port, () => {
     if (isAdressInfo(address)) {
         const addressInfo = address as AddressInfo
         Logger.info(`Listening on port ${addressInfo.port}`)
-    }
-    else {
+    } else {
         Logger.info(`started application`)
     }
+
+    Logger.info("....")
+    Logger.info("build and use CLI interface")
+    Logger.info("e.g.node dist/merger-cli.js --help")
+    Logger.info("....")
+    Logger.info("terminating server now....")
+    process.exit(0)
 });
 
 // our only exception to avoiding console.log(), because we

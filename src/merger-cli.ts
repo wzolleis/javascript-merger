@@ -45,12 +45,14 @@ const start = () => {
         process.exit(-1)
     }
 
-
     const {source, destination} = cliOptions;
     const sourceObj: PackageJson = readFile(source)
     destination.forEach(file => {
+        consoleLogger.info(`read file ${file}`)
         const destinationData = readFile(file)
+        consoleLogger.info(`merge file ${file}`)
         const mergeResult = mergeService.merge(sourceObj, destinationData)
+        consoleLogger.info(`write file ${file}`)
         writeObjectToFile(file, mergeResult)
     })
 }
