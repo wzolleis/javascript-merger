@@ -1,7 +1,6 @@
 import express from 'express';
 
 // this is a simple route to make sure everything is working properly
-// @ts-ignore
 const runningMessage = `Server running at http://localhost`;
 
 class RootController {

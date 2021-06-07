@@ -3,8 +3,9 @@ import clear from 'clear'
 import figlet from "figlet";
 import {consoleLogger} from './common/lib/winston.logger.config'
 import CommandLineParser from './common/lib/command.line.parser'
-import {pathExists} from "./common/lib/files";
-import {CliOptions} from "./common/common.types";
+import {pathExists, readFile, writeObjectToFile} from "./common/lib/files";
+import {CliOptions, PackageJson} from "./common/common.types";
+import mergeService from './merge_modules/services/merge.service'
 
 const checkArguments = (cliOptions: CliOptions): boolean => {
     let argsValid = true;
@@ -45,8 +46,13 @@ const start = () => {
     }
 
 
-    const source = (cliOptions.source);
-
+    const {source, destination} = cliOptions;
+    const sourceObj: PackageJson = readFile(source)
+    destination.forEach(file => {
+        const destinationData = readFile(file)
+        const mergeResult = mergeService.merge(sourceObj, destinationData)
+        writeObjectToFile(file, mergeResult)
+    })
 }
 
 start()

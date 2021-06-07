@@ -9,7 +9,10 @@ export interface CliOptions {
     destination: string[]
 }
 
-export interface MergeAttributes {
+export interface PackageJson {
+    name: string
+    version: string
+    description: string
     dependencies: {
         [key: string]: [value: string]
     },

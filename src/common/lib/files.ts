@@ -11,11 +11,9 @@ export const pathExists = (filePath: string) => {
 
 export const readFile = (filePath: string) => {
     const fileContents = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(fileContents)
+}
 
-    try {
-        const data = JSON.parse(fileContents)
-        console.log(data);
-    } catch(err) {
-        console.error(err);
-    }
+export const writeObjectToFile = (filePath: string, data: object) => {
+    fs.writeFileSync(filePath, JSON.stringify(data), 'utf-8');
 }
