@@ -7,6 +7,7 @@ export interface Identifyable {
 export interface CliOptions {
     source: string,
     destination: string[]
+    workingDirectory: string
 }
 
 export interface PackageJson {

@@ -10,14 +10,19 @@ import mergeService from './merge_modules/services/merge.service'
 const checkArguments = (cliOptions: CliOptions): boolean => {
     let argsValid = true;
 
+    if (!pathExists(cliOptions.workingDirectory)) {
+        consoleLogger.error(`invalid working directory ${cliOptions.workingDirectory}`)
+        argsValid = false
+    }
+
     if (!pathExists(cliOptions.source)) {
-        consoleLogger.error(`invalid source ${cliOptions.source}`)
+        consoleLogger.error(`invalid source ${cliOptions.workingDirectory}/${cliOptions.source}`)
         argsValid = false
     }
 
     cliOptions.destination.forEach((destination) => {
         if (!pathExists(destination)) {
-            consoleLogger.error(`invalid path ${destination}`)
+            consoleLogger.error(`invalid path ${cliOptions.workingDirectory}/${destination}`)
             argsValid = false
         }
     })
@@ -37,7 +42,14 @@ const start = () => {
     );
 
     const cliOptions = CommandLineParser.parseArguments(process.argv)
-    consoleLogger.info(`source = ${cliOptions.source}, destinations: ${cliOptions.destination.join()}`)
+    if (!pathExists(cliOptions.workingDirectory)) {
+        consoleLogger.error(`invalid directory ${cliOptions.workingDirectory}`)
+        process.exit(-1)
+    }
+
+    // Change "working directory" to be the current MODULE directory.
+    process.chdir(cliOptions.workingDirectory)
+    consoleLogger.info(`cwd = ${process.cwd()}`)
 
     const argsValid = checkArguments(cliOptions)
     if (!argsValid) {
