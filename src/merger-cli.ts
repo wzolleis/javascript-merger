@@ -3,8 +3,8 @@ import clear from 'clear'
 import figlet from "figlet";
 import {consoleLogger} from './common/lib/winston.logger.config'
 import CommandLineParser from './common/lib/command.line.parser'
-import {pathExists, readFile, writeObjectToFile} from "./common/lib/files";
-import {CliOptions, PackageJson} from "./common/common.types";
+import {pathExists} from "./common/lib/files";
+import {CliOptions} from "./common/common.types";
 import mergeService from './merge_modules/services/merge.service'
 import {MergeData} from "./merge_modules/merge.modules.types";
 
