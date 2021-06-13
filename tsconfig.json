@@ -3,7 +3,7 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "strict": true,
-    "target": "es6",
+    "target": "ES2019",
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,

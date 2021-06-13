@@ -47,26 +47,18 @@ const start = () => {
         process.exit(-1)
     }
 
-    // Change "working directory" to be the current MODULE directory.
+    // Das Arbeitsverzeichnis setzen, alle anderen Pfade sind relativ zu diesem Verzeichnis
     process.chdir(cliOptions.workingDirectory)
     consoleLogger.info(`cwd = ${process.cwd()}`)
 
     const argsValid = checkArguments(cliOptions)
     if (!argsValid) {
-        consoleLogger.error("invalid arguements - exiting...")
+        consoleLogger.error("invalid arguments - exiting...")
         process.exit(-1)
     }
 
     const {source, destination} = cliOptions;
-    const sourceObj: PackageJson = readFile(source)
-    destination.forEach(file => {
-        consoleLogger.info(`read file ${file}`)
-        const destinationData = readFile(file)
-        consoleLogger.info(`merge file ${file}`)
-        const mergeResult = mergeService.merge(sourceObj, destinationData)
-        consoleLogger.info(`write file ${file}`)
-        writeObjectToFile(file, mergeResult)
-    })
+    mergeService.mergeAll(source, destination)
 }
 
 start()

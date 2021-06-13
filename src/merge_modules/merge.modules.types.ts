@@ -1,5 +1,17 @@
-import {Identifyable} from '../common/common.types';
+import {PackageJson} from "../common/common.types";
 
-export interface MergeResult {
+export interface MergeData {
+    source: {
+        path: string
+        content: PackageJson
+    }
+    destination: {
+        path: string
+        content: PackageJson
+    }
+    result?: {
+        path: string
+        content: PackageJson
+    }
 }
 

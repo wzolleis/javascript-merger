@@ -15,5 +15,5 @@ export const readFile = (filePath: string) => {
 }
 
 export const writeObjectToFile = (filePath: string, data: object) => {
-    fs.writeFileSync(filePath, JSON.stringify(data), 'utf-8');
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
 }
