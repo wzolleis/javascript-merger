@@ -6,6 +6,7 @@ import CommandLineParser from './common/lib/command.line.parser'
 import {pathExists, readFile, writeObjectToFile} from "./common/lib/files";
 import {CliOptions, PackageJson} from "./common/common.types";
 import mergeService from './merge_modules/services/merge.service'
+import {MergeData} from "./merge_modules/merge.modules.types";
 
 const checkArguments = (cliOptions: CliOptions): boolean => {
     let argsValid = true;
@@ -29,6 +30,10 @@ const checkArguments = (cliOptions: CliOptions): boolean => {
 
     return argsValid
 
+}
+
+const logResult = (result: MergeData): void => {
+    consoleLogger.info(`merged '${result.source.path}' into '${result.destination.path}'`)
 }
 
 
@@ -57,8 +62,9 @@ const start = () => {
         process.exit(-1)
     }
 
-    const {source, destination} = cliOptions;
-    mergeService.mergeAll(source, destination)
+    const {source, destination: destinations} = cliOptions;
+    const mergeData = destinations.flatMap(destination => mergeService.createMergeData(source, destination))
+    mergeService.mergeAll(mergeData).flatMap(logResult)
 }
 
 start()

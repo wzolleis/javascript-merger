@@ -2,14 +2,7 @@ import {MergeData} from "../merge.modules.types";
 import {readFile, writeObjectToFile} from "../../common/lib/files";
 
 class MergeService {
-    mergeAll(source: string, destinations: string[]): MergeData[] {
-        return destinations
-            .flatMap(destination => this.readData(source, destination))
-            .flatMap(this.mergeData)
-            .flatMap(this.writeData)
-    }
-
-    readData(source: string, destination: string): MergeData {
+    createMergeData(source: string, destination: string): MergeData {
         return {
             source: {
                 path: source,
@@ -22,6 +15,12 @@ class MergeService {
         }
     }
 
+    mergeAll(mergeData: MergeData[]): MergeData[] {
+        return mergeData
+            .flatMap(this.mergeData)
+            .flatMap(this.writeData)
+    }
+
     mergeData(input: MergeData): MergeData {
         const dependencies = {
             ...input.destination.content.dependencies,
@@ -32,15 +31,17 @@ class MergeService {
             ...input.source.content.devDependencies
         }
 
+        const mergeResult = {
+            ...input.destination.content,
+            dependencies,
+            devDependencies
+        }
+
         return {
             ...input,
             result: {
                 path: input.destination.path,
-                content: {
-                    ...input.destination.content,
-                    dependencies,
-                    devDependencies
-                }
+                content: mergeResult
             }
         }
     }

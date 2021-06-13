@@ -1,9 +1,20 @@
 import {PackageJson} from '../../common/common.types';
 import sut from './merge.service'
+import {MergeData} from "../merge.modules.types";
 
 describe("merge dependencies", () => {
     let source: PackageJson = {dependencies: {}, devDependencies: {}}
     let destination: PackageJson = {dependencies: {}, devDependencies: {}}
+    let mergeData: MergeData = {
+        source: {
+            path: '',
+            content: source
+        },
+        destination: {
+            path: '',
+            content: destination
+        }
+    }
 
     beforeEach(() => {
         const sourceDependencies = {
@@ -48,19 +59,31 @@ describe("merge dependencies", () => {
             }
         }
 
+        mergeData = {
+            source: {
+                path: '',
+                content: source
+            },
+            destination: {
+                path: '',
+                content: destination
+            }
+        }
     })
 
     it("merge dependencies", () => {
-        const result = sut.merge(source, destination)
-        expect(result.dependencies).toBeDefined()
-        expect(result.devDependencies).toBeDefined()
+        const result = sut.mergeData(mergeData)
 
-        expect(result.dependencies!["test"]).toBe(source.dependencies!["test"]) // update
-        expect(result.dependencies!["test-2"]).toBe(source.dependencies!["test-2"]) // neu
-        expect(result.dependencies!["test-3"]).toBe(destination.dependencies!["test-3"]) // bleibt erhalten
+        expect(result.result).toBeDefined()
+        expect(result.result?.content.dependencies).toBeDefined()
+        expect(result.result?.content.devDependencies).toBeDefined()
 
-        expect(result.devDependencies!["test"]).toBe(source.devDependencies!["test"]) // update
-        expect(result.devDependencies!["test-2"]).toBe(source.devDependencies!["test-2"]) // neu
-        expect(result.devDependencies!["test-3"]).toBe(destination.devDependencies!["test-3"]) // bleibt erhalten
+        expect(result.result?.content.dependencies!["test"]).toBe(source.dependencies!["test"]) // update
+        expect(result.result?.content.dependencies!["test-2"]).toBe(source.dependencies!["test-2"]) // neu
+        expect(result.result?.content.dependencies!["test-3"]).toBe(destination.dependencies!["test-3"]) // bleibt erhalten
+
+        expect(result.result?.content.devDependencies!["test"]).toBe(source.devDependencies!["test"]) // update
+        expect(result.result?.content.devDependencies!["test-2"]).toBe(source.devDependencies!["test-2"]) // neu
+        expect(result.result?.content.devDependencies!["test-3"]).toBe(destination.devDependencies!["test-3"]) // bleibt erhalten
     })
 })
