@@ -4,7 +4,11 @@
   "description": "nur zum testen gedacht",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.16.1"
+    "express": "^4.17.1",
+    "debug": "^2.6.9",
+    "express-winston": "^4.1.0",
+    "shortid": "^2.2.16",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",

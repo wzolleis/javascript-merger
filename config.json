@@ -1,0 +1,8 @@
+{
+  "cwd": "/Users/wz/projects/dev/checkout/javascript-merger/testdata",
+  "source": "source.json",
+  "destination": [
+    "destination_1.json",
+    "destination_2.json"
+  ]
+}
